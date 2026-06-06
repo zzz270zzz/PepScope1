@@ -11,13 +11,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-# Pre-download ESM model into image
-RUN python -c "from transformers import AutoTokenizer, AutoModel; \
-    AutoTokenizer.from_pretrained('facebook/esm2_t30_150M_UR50D'); \
-    AutoModel.from_pretrained('facebook/esm2_t30_150M_UR50D')"
-
-RUN chmod +x start.sh
+RUN python -c "from transformers import AutoTokenizer, AutoModel; tokenizer = AutoTokenizer.from_pretrained('facebook/esm2_t30_150M_UR50D'); model = AutoModel.from_pretrained('facebook/esm2_t30_150M_UR50D')"
 
 EXPOSE 8080
 
-CMD ["./start.sh"]
+CMD python app.py
